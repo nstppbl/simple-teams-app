@@ -27,8 +27,8 @@
     {
       "entityId": "timesheets",
       "name": "Timesheets",
-      "contentUrl": "https://YOUR-URL-HERE/index.html",
-      "websiteUrl": "https://YOUR-URL-HERE/index.html",
+      "contentUrl": "https://nstppbl.github.io/simple-teams-app/index.html",
+      "websiteUrl": "https://nstppbl.github.io/simple-teams-app/index.html",
       "scopes": ["personal"]
     }
   ],
@@ -42,4 +42,5 @@
     "res.cdn.office.net"
   ]
 }
+
 
