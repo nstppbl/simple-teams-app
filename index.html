@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timesheets Application</title>
+    <script src="https://res.cdn.office.net/teams-js/2.0.0/js/MicrosoftTeams.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+
+        .welcome-message {
+            background: #f0f7ff;
+            border-left: 4px solid #0078d4;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+            text-align: left;
+        }
+
+        .user-info {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .user-info p {
+            margin: 8px 0;
+            color: #555;
+        }
+
+        .user-info strong {
+            color: #0078d4;
+        }
+
+        .status {
+            margin-top: 20px;
+            padding: 15px;
+            background: #e8f5e9;
+            border-radius: 8px;
+            color: #2e7d32;
+        }
+
+        .error {
+            background: #ffebee;
+            color: #c62828;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .loading {
+            color: #666;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 Timesheets Application</h1>
+        
+        <div class="welcome-message">
+            <p><strong>Добро пожаловать!</strong></p>
+            <p>Это веб-приложение для управления таймшитами в Microsoft Teams.</p>
+        </div>
+
+        <div id="userInfo" class="user-info" style="display: none;">
+            <p><strong>Пользователь:</strong> <span id="userName">-</span></p>
+            <p><strong>Email:</strong> <span id="userEmail">-</span></p>
+            <p><strong>Tenant ID:</strong> <span id="tenantId">-</span></p>
+        </div>
+
+        <div id="status" class="status" style="display: none;">
+            ✅ Приложение успешно загружено в Teams!
+        </div>
+
+        <div id="error" class="error" style="display: none;"></div>
+
+        <div id="loading" class="loading">
+            Инициализация Teams...
+        </div>
+    </div>
+
+    <script>
+        // Инициализация Teams
+        microsoftTeams.app.initialize().then(() => {
+            console.log('Teams initialized successfully');
+            
+            // Уведомить Teams, что приложение готово
+            microsoftTeams.app.notifySuccess();
+            
+            // Скрыть загрузку
+            document.getElementById('loading').style.display = 'none';
+            
+            // Показать статус
+            document.getElementById('status').style.display = 'block';
+            
+            // Получить информацию о пользователе
+            microsoftTeams.app.getContext().then((context) => {
+                console.log('Context:', context);
+                
+                if (context.user) {
+                    // Показать информацию о пользователе
+                    document.getElementById('userName').textContent = context.user.displayName || 'Не указано';
+                    document.getElementById('userEmail').textContent = context.user.userPrincipalName || 'Не указано';
+                    document.getElementById('tenantId').textContent = context.user.tenant?.id || 'Не указано';
+                    document.getElementById('userInfo').style.display = 'block';
+                }
+            }).catch((err) => {
+                console.error('Error getting context:', err);
+                showError('Не удалось получить информацию о пользователе: ' + err.message);
+            });
+            
+        }).catch((err) => {
+            console.error('Error initializing Teams:', err);
+            document.getElementById('loading').style.display = 'none';
+            showError('Не удалось инициализировать Teams: ' + err.message);
+        });
+
+        function showError(message) {
+            const errorDiv = document.getElementById('error');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
+

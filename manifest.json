@@ -1,0 +1,45 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/teams/v1.16/MicrosoftTeams.schema.json",
+  "manifestVersion": "1.16",
+  "version": "1.0.0",
+  "id": "timesheets-app-001",
+  "packageName": "com.company.timesheets",
+  "developer": {
+    "name": "Your Company",
+    "websiteUrl": "https://yourwebsite.com",
+    "privacyUrl": "https://yourwebsite.com/privacy",
+    "termsOfUseUrl": "https://yourwebsite.com/terms"
+  },
+  "name": {
+    "short": "Timesheets",
+    "full": "Timesheets Application"
+  },
+  "description": {
+    "short": "Управление таймшитами",
+    "full": "Веб-приложение для управления таймшитами, утверждениями и дашбордами"
+  },
+  "icons": {
+    "color": "icon-color.png",
+    "outline": "icon-outline.png"
+  },
+  "accentColor": "#0078D4",
+  "staticTabs": [
+    {
+      "entityId": "timesheets",
+      "name": "Timesheets",
+      "contentUrl": "https://YOUR-URL-HERE/index.html",
+      "websiteUrl": "https://YOUR-URL-HERE/index.html",
+      "scopes": ["personal"]
+    }
+  ],
+  "permissions": [
+    "identity",
+    "messageTeamMembers"
+  ],
+  "validDomains": [
+    "YOUR-URL-HERE",
+    "*.login.microsoftonline.com",
+    "res.cdn.office.net"
+  ]
+}
+
